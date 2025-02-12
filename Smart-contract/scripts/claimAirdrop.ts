@@ -16,10 +16,10 @@ const airdropABI = [
 
 // Add wallet address and merkle proof
 const userAddress = "0xUserAddressHere";  // Replace with actual user address
-const claimAmount = ethers.parseUnits("1", 18); // Example: 1 MayToken (in wei)
+const claimAmount = ethers.parseUnits("1", 18); // Example: 1 MayLordToken (in wei)
 
 const userProof: string[] = [
-    "0xabc123...", // Replace with actual proof from generateMerkleTree.ts
+    "0xabc123...",
 ];
 
 async function claimAirdrop() {

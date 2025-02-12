@@ -17,10 +17,10 @@ async function deployToken() {
   // Deploy the contract with the constructor arguments
   const token = await MayLordToken.deploy(tokenName, tokenSymbol, initialSupply);
 
-  console.log("MayLordToken deployed to:", token.address);
+  console.log("MayLordToken deployed to:", token.getAddress());
 
   // Wait for the contract to be mined
-  await token.deployed();
+  await token.waitForDeployment();
 
   // Check the balance of the deployer (the owner) to ensure initial minting is successful
   const deployerBalance = await token.balanceOf(deployer.address);
@@ -32,7 +32,7 @@ async function deployToken() {
 
     // Verify contract on BaseScan (Sepolia)
     await run("verify:verify", {
-      address: token.address,
+      address: await token.getAddress(),
       constructorArguments: [tokenName, tokenSymbol, initialSupply],
     });
   }
