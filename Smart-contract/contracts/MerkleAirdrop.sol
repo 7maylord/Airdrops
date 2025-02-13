@@ -17,7 +17,7 @@ contract MerkleAirdrop is Ownable{
 
     
     // Events
-    event AirdropClaimed(address indexed account, uint256 amount);
+    event AirdropClaimed(address indexed claimer, uint256 amount);
     event MerkleRootUpdated(bytes32 newMerkleRoot);
     event OwnerWithdraw(address indexed to, uint256 amount);
 
@@ -30,22 +30,22 @@ contract MerkleAirdrop is Ownable{
         mayLordToken = _mayLordToken;
     }
 
-    function claimAirdrop(address account, uint256 amount, bytes32[] calldata proof) external returns(bool) {
-        if (!hasClaimed[account]) {
+    function claimAirdrop(uint256 amount, bytes32[] calldata proof) external returns(bool) {
+        if (hasClaimed[msg.sender]) {
             revert ALREADYCLAIMED();
         }
         // Verify proof
-        bytes32 _leaf = keccak256(bytes.concat(keccak256(abi.encode(account, amount))));
+        bytes32 _leaf = keccak256(abi.encodePacked(msg.sender, amount));
 
         if(!MerkleProof.verify(proof, merkleRoot, _leaf)){
-            revert NOTWHITELISTED(account);
+            revert NOTWHITELISTED(msg.sender);
         }
 
-        hasClaimed[account] = true;
+        hasClaimed[msg.sender] = true;
 
-        emit AirdropClaimed(account, amount);
+        mayLordToken.safeTransfer(msg.sender, amount);
 
-        mayLordToken.safeTransfer(account, amount);
+        emit AirdropClaimed(msg.sender, amount);
 
         return true;
     }

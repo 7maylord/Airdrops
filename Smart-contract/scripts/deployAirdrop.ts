@@ -8,7 +8,7 @@ async function deployAirdrop() {
     console.log(`Deploying contract with account: ${deployer.address}`);
 
     // Ensure Merkle Root and ERC-20 token address are correct
-    const merkleRoot: string = "0x2ef485005545ef940e213fbdc0e722834b51dad9edcdc1ff6440d68dc5661e0b";
+    const merkleRoot: string = "0x09b91c04b07ecebc08619580dc93d92ffeb834c568759604b723fe1d9daba1d3";
     const mayLordTokenAddress: string = "0x2322cb0D27c573F1909023c5c0bC9aACb4D78B5E";
 
     // Get contract factory

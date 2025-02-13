@@ -50,4 +50,4 @@ updateMerkleRoot()
   .catch((error) => {
     console.error("Script execution failed:", error);
     process.exit(1);
-  });
+});
