@@ -9,17 +9,14 @@ async function deployToken() {
   // Get contract factory
   const MayLordToken = await ethers.getContractFactory("MayLordToken");
 
-  // Set initial parameters for the contract
   const tokenName = "MayLordToken";
   const tokenSymbol = "MLT";
-  const initialSupply = 1000000; // Adjust initial supply as needed
+  const initialSupply = 1000000; 
 
-  // Deploy the contract with the constructor arguments
   const token = await MayLordToken.deploy(tokenName, tokenSymbol, initialSupply);
 
   console.log("MayLordToken deployed to:", token.getAddress());
 
-  // Wait for the contract to be mined
   await token.waitForDeployment();
 
   // Check the balance of the deployer (the owner) to ensure initial minting is successful
@@ -30,7 +27,6 @@ async function deployToken() {
   if (process.env.HARDHAT_NETWORK !== "hardhat") {
     console.log("Verifying contract on BaseScan (Base Sepolia)...");
 
-    // Verify contract on BaseScan (Sepolia)
     await run("verify:verify", {
       address: await token.getAddress(),
       constructorArguments: [tokenName, tokenSymbol, initialSupply],
